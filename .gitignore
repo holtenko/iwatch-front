@@ -1,0 +1,9 @@
+# Eclipse #
+.settings/
+.metadata/
+.classpath
+.project
+
+# IDEA #
+.idea/
+*iml
