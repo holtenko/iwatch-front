@@ -2,17 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>空气温度</title>
+    <title>空气湿度</title>
     <script src="./js/echarts.common.min.js"></script>
     <script src="./js/jquery-3.1.0.min.js"></script>
 </head>
 <body>
-<div id="before">
-    开始时间:<input type="text" id="startTime" value="2016-07-17 11:25:00"/>
-    结束时间:<input type="text" id="endTime" value="2016-07-17 12:25:00"/>
-    <input id="refresh" type="button" value="查看"/>
-    <p>(时间示例：2016-07-23 00:00:00，不填开始时间表示2015-01-01 00:00:00，不填结束时间表示当前时间)</p>
-</div>
 <div id="main">
     <div id="dataArea1" style="width: 50%;height: 400px;float:left"></div>
     <div id="dataArea2" style="width: 50%;height: 400px;float:left"></div>
@@ -26,13 +20,11 @@
         dataArray[i] = new Array();
     }
 
-    $("#refresh").click(function () {
-        var startTime = $("#startTime").val();
-        var endTime = $("#endTime").val();
+    $(function () {
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/airTemp?deviceid=-1&startTime=' + startTime + '&endTime=' + endTime,
+                    url: 'http://localhost:8080/airHumidity?deviceid=-1',
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
@@ -41,11 +33,6 @@
                                 dataArray[deviceid - 10200001].push([new Date(data[i].timestamp), data[i].value]);
                             }
                         }
-                        var chart1 = echarts.init(document.getElementById('dataArea1'));
-                        var chart2 = echarts.init(document.getElementById('dataArea2'));
-                        var chart3 = echarts.init(document.getElementById('dataArea3'));
-                        var chart4 = echarts.init(document.getElementById('dataArea4'));
-                        var chart5 = echarts.init(document.getElementById('dataArea5'));
                         chart1.setOption(option1);
                         chart2.setOption(option2);
                         chart3.setOption(option3);
@@ -58,6 +45,12 @@
                 }
         );
     })
+
+    var chart1 = echarts.init(document.getElementById('dataArea1'));
+    var chart2 = echarts.init(document.getElementById('dataArea2'));
+    var chart3 = echarts.init(document.getElementById('dataArea3'));
+    var chart4 = echarts.init(document.getElementById('dataArea4'));
+    var chart5 = echarts.init(document.getElementById('dataArea5'));
 
     option1 = {
         title: {text: '第一栋'},

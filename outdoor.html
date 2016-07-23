@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>室外参数</title>
+    <script src="./js/echarts.common.min.js"></script>
+    <script src="./js/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+<div id="main">
+    <div id="airTempArea" style="width: 50%;height: 400px;float:left"></div>
+    <div id="airHumidityArea" style="width: 50%;height: 400px;float:left"></div>
+    <div id="solarRadiationArea" style="width: 50%;height: 400px;float:left"></div>
+    <div id="windDirectArea" style="width: 50%;height: 400px;float:left"></div>
+    <div id="windSpeedArea" style="width: 50%;height: 400px;float:left"></div>
+    <div id="atmosphereArea" style="width: 50%;height: 400px;float:left"></div>
+    <div id="rainfallArea" style="width: 50%;height: 400px;float:left"></div>
+</div>
+<script type="text/javascript">
+    var dataArray = new Array();
+    for (var i = 0; i < 7; i++) {
+        dataArray[i] = new Array();
+    }
+
+    $(function () {
+        $.ajax(
+                {
+                    type: 'GET',
+                    url: 'http://localhost:8080/airTemp?deviceid=10500001',
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            dataArray[0].push([new Date(data[i].timestamp), data[i].value]);
+                        }
+                        airTempChart.setOption(option1);
+                    },
+                    error: function () {
+                        alert('fail');
+                    }
+                }
+        );
+        $.ajax(
+                {
+                    type: 'GET',
+                    url: 'http://localhost:8080/airHumidity?deviceid=10500001',
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            dataArray[1].push([new Date(data[i].timestamp), data[i].value]);
+                        }
+                        airHumidityChart.setOption(option2);
+                    },
+                    error: function () {
+                        alert('fail');
+                    }
+                }
+        );
+        $.ajax(
+                {
+                    type: 'GET',
+                    url: 'http://localhost:8080/solarRadiation?deviceid=10500001',
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            dataArray[2].push([new Date(data[i].timestamp), data[i].value]);
+                        }
+                        solarRadiationChart.setOption(option3);
+                    },
+                    error: function () {
+                        alert('fail');
+                    }
+                }
+        );
+        $.ajax(
+                {
+                    type: 'GET',
+                    url: 'http://localhost:8080/windDirect?deviceid=10500001',
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            dataArray[3].push([new Date(data[i].timestamp), data[i].value]);
+                        }
+                        windDirectChart.setOption(option4);
+                    },
+                    error: function () {
+                        alert('fail');
+                    }
+                }
+        );
+        $.ajax(
+                {
+                    type: 'GET',
+                    url: 'http://localhost:8080/windSpeed?deviceid=10500001',
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            dataArray[4].push([new Date(data[i].timestamp), data[i].value]);
+                        }
+                        windSpeedChart.setOption(option5);
+                    },
+                    error: function () {
+                        alert('fail');
+                    }
+                }
+        );
+        $.ajax(
+                {
+                    type: 'GET',
+                    url: 'http://localhost:8080/atmosphere?deviceid=10500001',
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            dataArray[5].push([new Date(data[i].timestamp), data[i].value]);
+                        }
+                        atmosphereChart.setOption(option6);
+                    },
+                    error: function () {
+                        alert('fail');
+                    }
+                }
+        );
+        $.ajax(
+                {
+                    type: 'GET',
+                    url: 'http://localhost:8080/rainfall?deviceid=10500001',
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            dataArray[6].push([new Date(data[i].timestamp), data[i].value]);
+                        }
+                        rainfallChart.setOption(option7);
+                    },
+                    error: function () {
+                        alert('fail');
+                    }
+                }
+        );
+
+    })
+
+    var airTempChart = echarts.init(document.getElementById('airTempArea'));
+    var airHumidityChart = echarts.init(document.getElementById('airHumidityArea'));
+    var solarRadiationChart = echarts.init(document.getElementById('solarRadiationArea'));
+    var windDirectChart = echarts.init(document.getElementById('windDirectArea'));
+    var windSpeedChart = echarts.init(document.getElementById('windSpeedArea'));
+    var atmosphereChart = echarts.init(document.getElementById('atmosphereArea'));
+    var rainfallChart = echarts.init(document.getElementById('rainfallArea'));
+
+    option1 = {
+        title: {text: '室外空气温度'},
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            data: dataArray[0]
+        }],
+    };
+
+    option2 = {
+        title: {text: '室外空气湿度'},
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            data: dataArray[1]
+        }],
+    };
+
+    option3 = {
+        title: {text: '太阳辐射强度'},
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            data: dataArray[2]
+        }],
+    };
+    option4 = {
+        title: {text: '风向'},
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            data: dataArray[3]
+        }],
+    };
+
+    option5 = {
+        title: {text: '风速'},
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            data: dataArray[4]
+        }],
+    };
+    option6 = {
+        title: {text: '大气压'},
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            data: dataArray[5]
+        }],
+    };
+
+    option7 = {
+        title: {text: '雨量'},
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: [{
+            type: 'line',
+            showSymbol: false,
+            hoverAnimation: true,
+            data: dataArray[6]
+        }],
+    };
+</script>
+</body>
+</html>
