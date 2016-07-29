@@ -7,6 +7,12 @@
     <script src="./js/jquery-3.1.0.min.js"></script>
 </head>
 <body>
+<div id="before">
+    开始时间:<input type="text" id="startTime" value="2016-07-24 07:30:00"/>
+    结束时间:<input type="text" id="endTime"/>
+    <input id="refresh" type="button" value="查看"/>
+    <p>(时间示例：2016-07-23 00:00:00，不填开始时间表示2015-01-01 00:00:00，不填结束时间表示当前时间)</p>
+</div>
 <div id="main">
     <div id="dataArea1" style="width: 50%;height: 400px;float:left"></div>
     <div id="dataArea2" style="width: 50%;height: 400px;float:left"></div>
@@ -20,11 +26,13 @@
         dataArray[i] = new Array();
     }
 
-    $(function () {
+    $("#refresh").click(function () {
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/airHumidity?deviceid=-1',
+                    url: 'http://localhost:8080/airHumidity?deviceid=-1&startTime=' + startTime + '&endTime=' + endTime,
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
