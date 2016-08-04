@@ -23,6 +23,7 @@
     <div id="rainfallArea" style="width: 50%;height: 400px;float:left"></div>
 </div>
 <script type="text/javascript">
+    var rooturl='http://localhost:8080';
     var dataArray = new Array();
     for (var i = 0; i < 7; i++) {
         dataArray[i] = new Array();
@@ -34,7 +35,7 @@
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/airTemp?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
+                    url: rooturl+'/airTemp?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
@@ -50,7 +51,7 @@
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/airHumidity?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
+                    url: rooturl+'/airHumidity?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
@@ -66,7 +67,7 @@
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/solarRadiation?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
+                    url: rooturl+'/solarRadiation?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
@@ -82,7 +83,7 @@
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/windDirect?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
+                    url: rooturl+'/windDirect?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
@@ -98,7 +99,7 @@
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/windSpeed?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
+                    url: rooturl+'/windSpeed?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
@@ -114,7 +115,7 @@
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/atmosphere?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
+                    url: rooturl+'/atmosphere?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
@@ -130,7 +131,7 @@
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/rainfall?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
+                    url: rooturl+'/rainfall?deviceid=10500001&startTime=' + startTime + '&endTime=' + endTime,
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {

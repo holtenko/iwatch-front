@@ -21,6 +21,7 @@
     <div id="dataArea5" style="width: 50%;height: 400px;float:left"></div>
 </div>
 <script type="text/javascript">
+    var rooturl='http://localhost:8080';
     var dataArray = new Array();
     for (var i = 0; i < 30; i++) {
         dataArray[i] = new Array();
@@ -32,7 +33,7 @@
         $.ajax(
                 {
                     type: 'GET',
-                    url: 'http://localhost:8080/airTemp?deviceid=-1&startTime=' + startTime + '&endTime=' + endTime,
+                    url: rooturl+'/airTemp?deviceid=-1&startTime=' + startTime + '&endTime=' + endTime,
                     dataType: 'jsonp',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
